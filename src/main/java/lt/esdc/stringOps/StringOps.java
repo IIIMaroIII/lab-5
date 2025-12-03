@@ -4,16 +4,15 @@ import com.github.javafaker.Faker;
 
 public class StringOps {
     public static void main(String[] args) {
-init();
+    new StringOps().init();
     }
 
-    static void init() {
-
+     public void init() {
+        randomSentences(10, " | ");
     }
-
-    public String randomSentences(int quantity, char delimiter) {
+    public String randomSentences(int quantity, String delimiter) {
         Faker faker = new Faker();
+        return faker.name().fullName();
 
-        
     }
 }
