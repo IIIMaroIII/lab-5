@@ -1,7 +1,5 @@
 package lt.esdc.stringOps;
 
-import java.util.Arrays;
-
 public class StringOps {
     public static void main(String[] args) {
         new StringOps().init();
@@ -11,26 +9,23 @@ public class StringOps {
         determineRepeatableWords();
     }
 
+    //    SHINES rain falls Rain falls wind gentle WIND gentle ocean blue Ocean blue Earth
     public void determineRepeatableWords() {
-        String input = "Sun shines bright sun sun SHINES rain falls Rain falls wind gentle WIND gentle ocean blue Ocean blue Earth".toLowerCase();
-
-        String[] arr = input.split("\s+");
-
-        Arrays.sort(arr);
-        System.out.println("arr.length: " + arr.length);
-        System.out.println("arr: " + Arrays.toString(arr));
-        int counter = 1;
+        String input = "Sun shines shines sun sun bright bright".toLowerCase();
+        String[] arr = input.toLowerCase().split("\s+");
         for (int i = 0; i < arr.length; i++) {
+            String word = arr[i];
+            int counter = 0;
 
-            if (i < arr.length - 1 && arr[i].equalsIgnoreCase(arr[i + 1])) {
-//                System.out.format("Occured %s vs %s\n", arr[i], arr[i + 1]);
-//                System.out.println(arr[i]);
-                counter++;
-                if (counter % 2 != 0) {
-                    System.out.println(arr[i]);
+            for (int j = 0; j < arr.length; j++) {
+
+                if (word.equals(arr[j])) {
+                    counter++;
+                    System.out.println("word.equals(arr[j]): " + word.equals(arr[j]));
+                    System.out.println("word vs arr[j]: " + word + " -> " + arr[j]);
                 }
             }
-
+            System.out.printf("The word <%s> occured <%d> times ->\n" + word, counter);
         }
 
     }
