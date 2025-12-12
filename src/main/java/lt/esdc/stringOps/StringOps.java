@@ -1,32 +1,90 @@
 package lt.esdc.stringOps;
 
+import java.util.ArrayList;
+
 public class StringOps {
+    public static final String RESET = "\u001B[0m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String RED = "\u001B[31m";
+
     public static void main(String[] args) {
         new StringOps().init();
     }
 
     public void init() {
-        determineRepeatableWords();
+//        determineRepeatableWords();
+//        upperFirstLetters();
+        countAndSortWordsByTotalOccurrences();
     }
 
-    //    SHINES rain falls Rain falls wind gentle WIND gentle ocean blue Ocean blue Earth
     public void determineRepeatableWords() {
-        String input = "Sun shines shines sun sun bright bright".toLowerCase();
-        String[] arr = input.toLowerCase().split("\s+");
-        for (int i = 0; i < arr.length; i++) {
-            String word = arr[i];
-            int counter = 0;
+        String input = "Sun  Sun Sun Sun shines shines sun bright bright ".toLowerCase().trim();
+        String[] arr = input.toLowerCase().split("\\W+");
+        StringBuilder result = new StringBuilder();
 
-            for (int j = 0; j < arr.length; j++) {
+        int counter = 0;
+        for (String word : arr) {
+            for (String eachWord : arr) {
 
-                if (word.equals(arr[j])) {
+                if (word.equals(eachWord)) {
                     counter++;
-                    System.out.println("word.equals(arr[j]): " + word.equals(arr[j]));
-                    System.out.println("word vs arr[j]: " + word + " -> " + arr[j]);
                 }
             }
-            System.out.printf("The word <%s> occured <%d> times ->\n" + word, counter);
+            if (counter % 2 != 0) {
+                System.out.format(GREEN + "✅ The word %s has occurred %d times\n", word, counter);
+                return;
+            }
+
+        }
+        System.out.println(RED + "⚠️ We haven't found any even occurrences.\n");
+
+    }
+
+    public void upperFirstLetters() {
+        String input = "  Sun Sun Sun  shines sun bright shines bright".toLowerCase().trim();
+
+        String[] arr = input.split("\\s+");
+        String[] result = new String[arr.length];
+
+        int i = 0;
+        for (String word : arr) {
+            char firstUpperCaseLetter = Character.toUpperCase(word.charAt(0));
+            String newWord = word.replaceFirst("^\\w", String.valueOf(firstUpperCaseLetter));
+            result[i] = newWord;
+            i++;
         }
 
+        System.out.println(GREEN + "👉 A given string: " + BLUE + input);
+        System.out.println(GREEN + "🏁 Result: " + BLUE + String.join(" ", result));
+    }
+
+    //The city wakes up when the sun lights the streets and the houses. People leave their houses, and the sun continues to shine over the city.
+    public void countAndSortWordsByTotalOccurrences() {
+        String text = "The sun shines brightly over the city, and the sun rises above the buildings.".toLowerCase().trim();
+        String listOfWords = "sun the city houses people streets".toLowerCase().trim();
+        String[] arrFromText = text.split("\\W+");
+        String[] arrFromWordsList = listOfWords.split("\\W+");
+
+
+        ArrayList<String> output = new ArrayList<>();
+
+
+        for (String wordInText : arrFromText) {
+            for (String wordInList : arrFromWordsList) {
+                if (wordInText.equals(wordInList)) {
+                    output.add(wordInText);
+                }
+            }
+        }
+        System.out.println("sorted output" + output);
+
+
+        int iteration = 0;
+        int occurrenceCounter = 0;
+
+        for (String matchedWord : output) {
+            System.out.println(matchedWord);
+        }
     }
 }
