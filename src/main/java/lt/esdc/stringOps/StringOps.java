@@ -1,7 +1,6 @@
 package lt.esdc.stringOps;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class StringOps {
     public static final String RESET = "\u001B[0m";
@@ -67,29 +66,16 @@ public class StringOps {
         String[] arrFromText = text.split("\\W+");
         String[] arrFromWordsList = listOfWords.split("\\W+");
 
-
-        ArrayList<String> output = new ArrayList<>();
-
+        ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
 
         for (String wordInText : arrFromText) {
-            for (String wordInList : arrFromWordsList) {
-                if (wordInText.equals(wordInList)) {
-                    output.add(wordInText);
-                }
+            ArrayList<String> listOfRepeatedWords = new ArrayList<String>();
+            for (String wordInListOfWords : arrFromWordsList) {
+                if (wordInText.equals(wordInListOfWords)) listOfRepeatedWords.add(wordInText);
             }
+
         }
-        String[] result = output.toArray(new String[0]);
-        Arrays.sort(result);
-        System.out.println();
-
-//        System.out.println("sorted: " + Arrays.sort(result));
 
 
-        int iteration = 0;
-        int occurrenceCounter = 0;
-
-        for (String matchedWord : output) {
-//            System.out.println(matchedWord);
-        }
     }
 }
