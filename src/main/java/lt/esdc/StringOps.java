@@ -1,6 +1,9 @@
 package lt.esdc;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class StringOps {
     public static final String RESET = "\u001B[0m";
@@ -16,7 +19,9 @@ public class StringOps {
 //        findEvenRepeatableWords(); //✅
 //        upperFirstLetterOfEachSentence(); //✅
 //        countAndSortWordsByTotalOccurrences(); //✅
-        palindromeSubstr();
+//        palindromeSubstr(); ✅
+//        specificPhoneNumberFormat(); ✅
+        checkAllWordsStartWithCapitalLetter();
     }
 
     public void findEvenRepeatableWords() {
@@ -167,5 +172,53 @@ public class StringOps {
     public void specificPhoneNumberFormat() {
         // +7 999 123-45-67
         // 8(999)123-45-67
+        System.out.println(BLUE + "The required pattern either +7 999 123-45-67 or 8(999)123-45-67");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(GREEN + "Enter the phone number: ");
+        String input = scanner.nextLine();
+
+        boolean verified = isFitForRegex(input);
+
+        if (verified) {
+            System.out.println(GREEN + " ✅ Success");
+            return;
+        }
+        System.out.println(RED + " ❌ Failure");
+
+    }
+
+    public void checkAllWordsStartWithCapitalLetter() {
+        String fileName = "tasks/text.c5.md";
+        File text = new File(fileName);
+
+        try (Scanner reader = new Scanner(text)) {
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String[] words = line.split("\\W+");
+
+                for (String word : words) {
+                    String rgx = "^[A-Z].*$";
+
+                    boolean isTheFirstCapitalChar = word.matches(rgx);
+
+                    if (!isTheFirstCapitalChar) continue;
+
+                    System.out.println(GREEN + "A word is: " + BLUE + word);
+                }
+
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occured during reading a file: " + fileName);
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public boolean isFitForRegex(String str) {
+        String regex = "^(?:\\+7\\s\\d{3}\\s\\d{3}-\\d{2}-\\d{2}|8\\(\\d{3}\\)\\d{3}-\\d{2}-\\d{2})$";
+        boolean isRegexOk = str.matches(regex);
+        if (isRegexOk) return true;
+        return false;
     }
 }
