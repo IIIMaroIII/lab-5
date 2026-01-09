@@ -21,7 +21,7 @@ public class StringOps {
 //        countAndSortWordsByTotalOccurrences(); //✅
 //        palindromeSubstr(); ✅
 //        specificPhoneNumberFormat(); ✅
-        checkAllWordsStartWithCapitalLetter();
+//        checkAllWordsStartWithCapitalLetter();
     }
 
     public void findEvenRepeatableWords() {
@@ -68,7 +68,6 @@ public class StringOps {
         System.out.println(GREEN + "🏁 Result: " + BLUE + String.join(". ", tmp));
     }
 
-    //The city wakes up when the sun lights the streets and the houses. People leave their houses, and the sun continues to shine over the city.
     public void countAndSortWordsByTotalOccurrences() {
         String text = ("The sun shines brightly over the city, houses and people, and the sun rises above the buildings as well as. " +
                 "As soon as the people..." +
@@ -208,7 +207,7 @@ public class StringOps {
 
             }
         } catch (FileNotFoundException e) {
-            System.out.println("An error occured during reading a file: " + fileName);
+            System.out.println("An error occurred during reading a file: " + fileName);
             e.printStackTrace();
         }
 
