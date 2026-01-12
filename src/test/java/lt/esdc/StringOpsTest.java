@@ -398,10 +398,11 @@ class StringOpsTest {
     }
 
     @Test
-    void palindromeSubstr_testCase_radar() {
+    @DisplayName("If there are several palindromes with the same length it will return the first one")
+    void palindromeSubstr_testCase_returns_radar() {
         //Arrange
-        String text4 = "In the i eye racecar radar civic notes I found , then , and finally written in bold, .";
-        String expected = "racecar";
+        String text4 = "In the i eye radar civic notes I found , then , and finally written in bold, .";
+        String expected = "radar";
         //Act
         String actual = StringOps.palindromeSubstr(text4);
         //Assert
