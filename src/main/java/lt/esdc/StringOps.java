@@ -32,9 +32,14 @@ public class StringOps {
 //        printStringArr(result3);
 
         //palindromeSubstr
-        String text4 = "In the i eye racecar radar civic notes I found , then , and finally written in bold, .";
-        String result4 = palindromeSubstr(text4);
-        System.out.println("✅ The longest palindrome word from the list is: " + result4);
+//        String text4 = "In the i eye racecar radar civic notes I found , then , and finally written in bold, .";
+//        String result4 = palindromeSubstr(text4);
+//        System.out.println("✅ The longest palindrome word from the list is: " + result4);
+
+//specificPhoneNumberFormat
+        Scanner scanner = new Scanner(System.in);
+        boolean res = specificPhoneNumberFormat(scanner);
+        System.out.println("🤞Result of specified phone number: " + res);
 
     }
 
@@ -166,19 +171,21 @@ public class StringOps {
         return longestPalindrome;
     }
 
-    public static void specificPhoneNumberFormat() {
+    public static boolean specificPhoneNumberFormat(Scanner sc) {
+        if (sc == null) return false;
         System.out.println(BLUE + "The required pattern either +7 999 123-45-67 or 8(999)123-45-67");
-        Scanner scanner = new Scanner(System.in);
+
         System.out.println(GREEN + "Enter the phone number: ");
-        String input = scanner.nextLine();
+        String input = sc.nextLine();
 
         boolean verified = isFitForRegex(input);
 
         if (verified) {
             System.out.println(GREEN + " ✅ Success");
-            return;
+            return true;
         }
         System.out.println(RED + " ❌ Failure");
+        return false;
 
     }
 

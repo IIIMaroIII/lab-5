@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestReporter;
 
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class StringOpsTest {
@@ -407,5 +409,15 @@ class StringOpsTest {
         String actual = StringOps.palindromeSubstr(text4);
         //Assert
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void specificPhoneNumberFormat_ifScannerIsNull_returnsFalse() {
+        //Arrange
+        Scanner scanner = null;
+        //Act
+        boolean actual = StringOps.specificPhoneNumberFormat(scanner);
+        //Assert
+        assertFalse(actual);
     }
 }
