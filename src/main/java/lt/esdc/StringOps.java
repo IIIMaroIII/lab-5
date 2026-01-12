@@ -3,7 +3,10 @@ package lt.esdc;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringOps {
     public static final String RESET = "\u001B[0m";
@@ -12,127 +15,131 @@ public class StringOps {
     public static final String RED = "\u001B[31m";
 
     public static void main(String[] args) {
-        new StringOps().init();
+        // findEvenRepeatableWords
+//        String text1 = "Sun sun brIght bright bRigHt shines shines ".strip();
+//        String result = findEvenRepeatableWords(text1);
+//        System.out.println("👉 Result of findEvenRepeatableWords: " + GREEN + "✅ " + result + " ✅" + RESET);
+
+        // upperFirstLetterOfEachSentence
+//        String text2 = ".!@#.$()-.";
+//        String result2 = upperFirstLetterOfEachSentence(text2);
+//        System.out.println("👉 Result of upperFirstLetterOfEachSentence: " + GREEN + "✅ " + result2 + " ✅" + RESET);
+
+        //countAndSortWordsByTotalOccurrences
+        String text3 = "The sun sun sun sun sun sun sun shines brightly over over over the the the city, houses and people, and the sun rises above the buildings as well as. ";
+        String listOfWords = " sun !! the";
+        String[] result3 = countAndSortWordsByTotalOccurrences(text3, listOfWords);
+        printStringArr(result3);
+
     }
 
-    public void init() {
-//        findEvenRepeatableWords();
-//        upperFirstLetterOfEachSentence();
-//        countAndSortWordsByTotalOccurrences();
-//        palindromeSubstr();
-//        specificPhoneNumberFormat();
-//        checkAllWordsStartWithCapitalLetter();
-    }
 
-    public void findEvenRepeatableWords() {
-        String input = "Sun Sun Sun Sun shines shines sun bright bright ".strip();
-        String[] arr = input.toLowerCase().split("\\W+");
-        System.out.println(BLUE + "Original sentence: " + input);
+    public static String findEvenRepeatableWords(String str) {
+        if (str == null || str.isBlank()) return null;
 
-        int occurancesCounter = 0;
-        for (String word : arr) {
-            for (String eachWord : arr) {
+        String[] wordsArr = str.toLowerCase().strip().split("\\W+");
+        int occurrenceCounter = 0;
 
-                if (word.equals(eachWord)) {
-                    occurancesCounter++;
+        for (int i = 0; i < wordsArr.length; i++) {
+            if (wordsArr[i].isBlank()) continue;
+            occurrenceCounter = 0;
+            int idx = -1;
+
+            do {
+                int idxOccurrence = str.toLowerCase().indexOf(wordsArr[i], idx + 1);
+                idx = idxOccurrence;
+
+                if (idx != -1) {
+                    occurrenceCounter++;
                 }
-            }
-            if (occurancesCounter % 2 != 0) {
-                System.out.format(GREEN + "✅ The word <%s> has occurred %d times\n", word, occurancesCounter);
-                return;
-            }
+            } while (idx >= 0);
 
+            if (occurrenceCounter % 2 == 0) {
+                continue;
+            }
+            return wordsArr[i];
         }
-        System.out.println(RED + "⚠️ We haven't found any even occurrences.\n");
-
+        return null;
     }
 
-    public void upperFirstLetterOfEachSentence() {
-        String input = "the city wakes up. when the sun lights the streets and the houses. people leave their houses. the sun continues to shine over the city".trim();
-        String[] arr = input.split("\\.+");
-
-        String[] tmp = new String[arr.length];
+    public static String upperFirstLetterOfEachSentence(String str) {
+        if (str == null || str.isBlank() || str.matches("\\W+")) return null;
+        String[] arr = str.split("\\.+");
+        StringBuilder result = new StringBuilder();
 
         int i = 0;
         for (String sentence : arr) {
-            String trimmedSentence = sentence.trim();
+            if (sentence.isBlank()) continue;
+
+            String trimmedSentence = sentence.toLowerCase().strip();
             char toUpperFirstChar = Character.toUpperCase(trimmedSentence.charAt(0));
             String newSentence = trimmedSentence.replaceFirst("^\\w", String.valueOf(toUpperFirstChar));
-            System.out.println("new sentence: " + newSentence);
-            tmp[i] = newSentence;
-
+            System.out.println("⚠️ Each sentence: " + sentence);
+            System.out.println("⚠️ Trimmed sentence: " + trimmedSentence);
+            System.out.println("⚠️ New sentence: " + newSentence);
+            result.append(newSentence).append(". ");
             i++;
         }
 
-        System.out.println(GREEN + "👉 A given string: " + BLUE + input);
-        System.out.println(GREEN + "🏁 Result: " + BLUE + String.join(". ", tmp));
+        return result.toString().strip();
+
+
     }
 
-    public void countAndSortWordsByTotalOccurrences() {
-        String text = ("The sun shines brightly over the city, houses and people, and the sun rises above the buildings as well as. " +
-                "As soon as the people..." +
-                "The city wakes up when the sun lights the streets and the houses. " +
-                "People leave their houses, and the sun continues to shine over the city.").trim();
-        System.out.println(BLUE + "Original text: " + GREEN + text);
+    public static String[] countAndSortWordsByTotalOccurrences(String str, String list) {
+        if (str == null || list == null || str.isBlank() || list.isBlank()) return new String[0];
 
-        String listOfWords = "city the sun houses people streets as".trim();
-        System.out.println(BLUE + "List of words: " + GREEN + listOfWords + RESET);
+        System.out.println(BLUE + "Original text: " + GREEN + str.strip());
+        System.out.println(BLUE + "List of words: " + GREEN + list.strip() + RESET);
 
-        String[] arrFromText = text.toLowerCase().split("\\W+");
-        String[] arrFromWordsList = listOfWords.toLowerCase().split("\\W+");
+        String[] arrFromText = str.toLowerCase().strip().split("\\W+");
+        String[] arrFromWordsList = list.toLowerCase().strip().split("\\W+");
 
-        // Init the temporary String[][], which will contain filled in String[] by word from the list
-        // The length of the String[] will indicate how many times the word from the list
-        // has occurred in the text;
-
-        String[][] tmp = new String[arrFromWordsList.length][];
-
-        // How many arrays have to inside the String[][];
-        int totalArraysInsideResult = 0;
-
+        // Counting occurrences
+        String[] result = new String[arrFromWordsList.length];
+        int i = 0;
         for (String wordFromList : arrFromWordsList) {
+            if (wordFromList.isBlank()) continue;
             // Counter for occurrence;
-            int occurancesCounter = 0;
+            int occurrencesCounter = 0;
 
             for (String wordInText : arrFromText) {
                 if (wordFromList.equals(wordInText)) {
-                    // If the word from the list occurred in the text then ++;
-                    occurancesCounter++;
+                    occurrencesCounter++;
                 }
             }
 
-            // Skip if there are not any occurrences;
-            if (occurancesCounter == 0) continue;
-
-            // Initializing the arr of occurrences;
-            String[] arr = new String[occurancesCounter];
-            // Filling in;
-            Arrays.fill(arr, wordFromList);
-            // At the index <totalArraysInsideResult> setting up the current array;
-            tmp[totalArraysInsideResult] = arr;
-            totalArraysInsideResult++;
-
+            String resultStr = "";
+            resultStr = "The word <" + wordFromList + "> occurred in the given text <" + occurrencesCounter + "> times";
+            result[i] = resultStr;
+            i++;
         }
 
-        // If any occurrences were found
-        if (totalArraysInsideResult == 0) {
-            System.out.println(RED + "Sorry, we haven't found any occurrences!" + RESET);
-        }
+        // Create a comparator, which will extract the occurrences counter
 
-        // Getting rid of <null>;
-        String[][] result = Arrays.copyOf(tmp, totalArraysInsideResult);
+        Comparator<String> comparator = Comparator.comparingInt((String s) -> {
+            String regexQuantityOfTimes = "<(\\d+)>\\s+times";
+            Matcher matcher = Pattern.compile(regexQuantityOfTimes).matcher(s);
+            if (matcher.find()) {
+                return Integer.parseInt(matcher.group(1));
+            }
+            return 0;
+        }).reversed();
 
-        // Sorting in reverse order
-        Arrays.sort(result, (a, b) -> Integer.compare(b.length, a.length));
+        Arrays.sort(result, comparator);
+        return result;
+    }
 
-        // Printing the result of searching
-        for (String[] innerArray : result) {
-            System.out.format("The word %s occurred in the given text 👉 %s times %n", GREEN + innerArray[0] + RESET, BLUE + innerArray.length + RESET);
+
+    public static void printStringArr(String[] arr) {
+        if (arr.length == 0) return;
+        for (String one : arr) {
+            System.out.println("📣 one in many: " + one);
         }
 
     }
 
-    public void palindromeSubstr() {
+    public static void palindromeSubstr() {
         String input = "In the level notes I found eye, then level, and finally racecar written in bold, eye.";
         System.out.println(BLUE + "Original text: " + GREEN + input);
         String[] arrOfWords = input.toLowerCase().trim().split("\\W+");
@@ -168,7 +175,7 @@ public class StringOps {
 
     }
 
-    public void specificPhoneNumberFormat() {
+    public static void specificPhoneNumberFormat() {
         System.out.println(BLUE + "The required pattern either +7 999 123-45-67 or 8(999)123-45-67");
         Scanner scanner = new Scanner(System.in);
         System.out.println(GREEN + "Enter the phone number: ");
@@ -184,7 +191,7 @@ public class StringOps {
 
     }
 
-    public void checkAllWordsStartWithCapitalLetter() {
+    public static void checkAllWordsStartWithCapitalLetter() {
         String fileName = "tasks/text.c5.md";
         File text = new File(fileName);
 
@@ -209,7 +216,7 @@ public class StringOps {
 
     }
 
-    public boolean isFitForRegex(String str) {
+    public static boolean isFitForRegex(String str) {
         String regex = "^(?:\\+7\\s\\d{3}\\s\\d{3}-\\d{2}-\\d{2}|8\\(\\d{3}\\)\\d{3}-\\d{2}-\\d{2})$";
         boolean isRegexOk = str.matches(regex);
         if (isRegexOk) return true;
