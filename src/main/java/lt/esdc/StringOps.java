@@ -71,7 +71,7 @@ public class StringOps {
             }
             return wordsArr[i];
         }
-        return null;
+        return "";
     }
 
     public static String upperFirstLetterOfEachSentence(String str) {
@@ -86,9 +86,6 @@ public class StringOps {
             String trimmedSentence = sentence.toLowerCase().strip();
             char toUpperFirstChar = Character.toUpperCase(trimmedSentence.charAt(0));
             String newSentence = trimmedSentence.replaceFirst("^\\w", String.valueOf(toUpperFirstChar));
-            System.out.println("⚠️ Each sentence: " + sentence);
-            System.out.println("⚠️ Trimmed sentence: " + trimmedSentence);
-            System.out.println("⚠️ New sentence: " + newSentence);
             result.append(newSentence).append(". ");
             i++;
         }
@@ -100,9 +97,6 @@ public class StringOps {
 
     public static String[] countAndSortWordsByTotalOccurrences(String str, String list) {
         if (str == null || list == null || str.isBlank() || list.isBlank()) return null;
-
-        System.out.println(BLUE + "Original text: " + GREEN + str.strip());
-        System.out.println(BLUE + "List of words: " + GREEN + list.strip() + RESET);
 
         String[] arrFromText = str.toLowerCase().strip().split("\\W+");
         String[] arrFromWordsList = list.toLowerCase().strip().split("\\W+");
@@ -145,7 +139,6 @@ public class StringOps {
 
     public static String palindromeSubstr(String text) {
         if (text == null || text.isBlank()) return null;
-        System.out.println(BLUE + "Original text: " + GREEN + text);
         String[] arrOfWords = text.toLowerCase().strip().split("\\W+");
 
         //Find all palindromes
@@ -169,24 +162,14 @@ public class StringOps {
         Comparator<String> comparator = Comparator.comparing(String::length).reversed();
         Arrays.sort(palindromeArr, comparator);
         String longestPalindrome = palindromeArr[0];
-        System.out.println("🔥 The longest palindrome: " + longestPalindrome);
+
         return longestPalindrome;
     }
 
     public static boolean specificPhoneNumberFormat(String input) {
         if (input == null || input.isBlank()) return false;
-        System.out.println(BLUE + "The required pattern either +7 999 123-45-67 or 8(999)123-45-67");
-        System.out.println(GREEN + "Enter the phone number: ");
 
-        boolean verified = isFitForRegex(input);
-
-        if (verified) {
-            System.out.println(GREEN + " ✅ Success");
-            return true;
-        }
-        System.out.println(RED + " ❌ Failure");
-        return false;
-
+        return isFitForRegex(input);
     }
 
     public static String[] checkAllWordsStartWithCapitalLetter(String text) {
@@ -199,7 +182,6 @@ public class StringOps {
             if (word.isBlank()) continue;
             boolean isFirstCapital = word.matches("^[A-Z].*$");
             if (isFirstCapital) {
-                System.out.println("👉 Word: " + word);
                 strBuilder.append(word).append(",");
             }
         }
@@ -211,8 +193,7 @@ public class StringOps {
     public static boolean isFitForRegex(String str) {
         String regex = "^(?:\\+7\\s\\d{3}\\s\\d{3}-\\d{2}-\\d{2}|8\\(\\d{3}\\)\\d{3}-\\d{2}-\\d{2})$";
         boolean isRegexOk = str.matches(regex);
-        if (isRegexOk) return true;
-        return false;
+        return isRegexOk;
     }
 
     public static void printStringArr(String[] arr) {

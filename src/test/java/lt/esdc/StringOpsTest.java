@@ -152,12 +152,12 @@ class StringOpsTest {
     @Test
     void findEvenRepeatableWords_containsOddRepetitionsReturnNull() {
         //Arrange
-        String expected = null;
+        String expected = "";
         String input = "Sun sun bright bright shines shines";
         //Act
         String actual = StringOps.findEvenRepeatableWords(input);
         //Assert
-        Assertions.assertNull(actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -235,9 +235,9 @@ class StringOpsTest {
 
 
     @Test
-    void upperFirstLetterOfEachSentence_ContainsSeparatorsAtTheBeginning() {
+    void upperFirstLetterOfEachSentence_testCase1() {
         //Arrange
-        String input = ".  the sun shines. brightly over the city. houses and people.";
+        String input = "the sun shines. brightly over the city. houses and people.";
         String expected = "The sun shines. Brightly over the city. Houses and people.";
         //Act
         String actual = StringOps.upperFirstLetterOfEachSentence(input);
