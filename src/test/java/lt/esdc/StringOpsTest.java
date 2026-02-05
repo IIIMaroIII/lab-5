@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StringOpsTest {
 
-    // isFitForRegex_shouldReturnTrue_forValidPhoneNumSunbers
     @Test
     void isFitForRegex_shouldReturnTrue_forValidPhoneNumbers_1Sun() {
         // Arrange
@@ -303,9 +302,13 @@ class StringOpsTest {
     @Test
     void countAndSortWordsByTotalOccurrences_test1_return_sun8_the6_over3_shines1() {
         //Arrange
-        String text = "The sun sun sun sun sun sun sun shines brightly over over over the the the city, houses and people, and the sun rises above the buildings as well as. ";
+        String text = "The sun sun sun sun sun sun sun shines brightly over over over the the the" +
+                " city, houses and people, and the sun rises above the buildings as well as. ";
         String listOfWords = "sun  the shines over";
-        String[] expected = new String[]{"The word <sun> occurred in the given text <8> times", "The word <the> occurred in the given text <6> times", "The word <over> occurred in the given text <3> times", "The word <shines> occurred in the given text <1> times"};
+        String[] expected = new String[]{"The word <sun> occurred in the given text <8> times",
+                "The word <the> occurred in the given text <6> times", "The word <over> occurred " +
+                "in the given text <3> times", "The word <shines> occurred in the given text <1> " +
+                "times"};
         //Act
         String[] actual = StringOps.countAndSortWordsByTotalOccurrences(text, listOfWords);
         //Assert
@@ -318,7 +321,10 @@ class StringOpsTest {
         //Arrange
         String text = "brightly city, houses and people, and rises above buildings as well as. ";
         String listOfWords = "sun  the shines over";
-        String[] expected = new String[]{"The word <sun> occurred in the given text <0> times", "The word <the> occurred in the given text <0> times", "The word <shines> occurred in the given text <0> times", "The word <over> occurred in the given text <0> times"};
+        String[] expected = new String[]{"The word <sun> occurred in the given text <0> times",
+                "The word <the> occurred in the given text <0> times", "The word <shines> " +
+                "occurred in the given text <0> times", "The word <over> occurred in the given " +
+                "text <0> times"};
         //Act
         String[] actual = StringOps.countAndSortWordsByTotalOccurrences(text, listOfWords);
         //Assert
@@ -330,7 +336,10 @@ class StringOpsTest {
         //Arrange
         String text = ";';;!! .. .. ,, ..... ";
         String list = "sun  the shines over";
-        String[] expected = new String[]{"The word <sun> occurred in the given text <0> times", "The word <the> occurred in the given text <0> times", "The word <shines> occurred in the given text <0> times", "The word <over> occurred in the given text <0> times"};
+        String[] expected = new String[]{"The word <sun> occurred in the given text <0> times",
+                "The word <the> occurred in the given text <0> times", "The word <shines> " +
+                "occurred in the given text <0> times", "The word <over> occurred in the given " +
+                "text <0> times"};
         //Act
         String[] actual = StringOps.countAndSortWordsByTotalOccurrences(text, list);
         //Assert
@@ -340,9 +349,13 @@ class StringOpsTest {
     @Test
     void countAndSortWordsByTotalOccurrences_withDifferentCapitalization_return_sun8_the6_over3_shines1() {
         //Arrange
-        String text = "The sun sUN sun Sun sUn suN SUN ShINes brightly over oVEr oVeR the tHE thE city, houses and people, and the sun rises above the buildings as well as. ";
+        String text = "The sun sUN sun Sun sUn suN SUN ShINes brightly over oVEr oVeR the tHE thE" +
+                " city, houses and people, and the sun rises above the buildings as well as. ";
         String listOfWords = "sUn  tHe sHINEs oVEr";
-        String[] expected = new String[]{"The word <sun> occurred in the given text <8> times", "The word <the> occurred in the given text <6> times", "The word <over> occurred in the given text <3> times", "The word <shines> occurred in the given text <1> times"};
+        String[] expected = new String[]{"The word <sun> occurred in the given text <8> times",
+                "The word <the> occurred in the given text <6> times", "The word <over> occurred " +
+                "in the given text <3> times", "The word <shines> occurred in the given text <1> " +
+                "times"};
         //Act
         String[] actual = StringOps.countAndSortWordsByTotalOccurrences(text, listOfWords);
         //Assert
@@ -384,7 +397,8 @@ class StringOpsTest {
     @DisplayName("Returns 'racecar' cause its the only longest palindrome")
     void palindromeSubstr_testCase_returns_racecar(TestReporter reporter) {
         //Arrange
-        String text4 = "In the i eye racecar radar civic notes I found , then , and finally written in bold, .";
+        String text4 = "In the i eye racecar radar civic notes I found , then , and finally " +
+                "written in bold, .";
         String expected = "racecar";
         //Act
         String actual = StringOps.palindromeSubstr(text4);
@@ -395,10 +409,12 @@ class StringOpsTest {
     }
 
     @Test
-    @DisplayName("If there are several palindromes with the same length it will return the first one")
+    @DisplayName("If there are several palindromes with the same length it will return the first " +
+            "one")
     void palindromeSubstr_testCase_returns_radar() {
         //Arrange
-        String text4 = "In the i eye radar civic notes I found , then , and finally written in bold, .";
+        String text4 = "In the i eye radar civic notes I found , then , and finally written in " +
+                "bold, .";
         String expected = "radar";
         //Act
         String actual = StringOps.palindromeSubstr(text4);
@@ -577,14 +593,7 @@ class StringOpsTest {
     void checkAllWordsStartWithCapitalLetter_returnsAllCapitalizedWords_ifMultipleExist() {
         // Arrange
         String text = "Alice met Bob in New York near Central Park";
-        String[] expected = {
-                "Alice",
-                "Bob",
-                "New",
-                "York",
-                "Central",
-                "Park"
-        };
+        String[] expected = {"Alice", "Bob", "New", "York", "Central", "Park"};
 
         // Act
         String[] actual = StringOps.checkAllWordsStartWithCapitalLetter(text);
@@ -597,11 +606,7 @@ class StringOpsTest {
     void checkAllWordsStartWithCapitalLetter_ignoresWordsStartingWithNonLetters() {
         // Arrange
         String text = "123 Apple _Banana !Cherry dog";
-        String[] expected = {
-                "Apple",
-                "Banana",
-                "Cherry"
-        };
+        String[] expected = {"Apple", "Banana", "Cherry"};
 
         // Act
         String[] actual = StringOps.checkAllWordsStartWithCapitalLetter(text);
@@ -614,12 +619,7 @@ class StringOpsTest {
     void checkAllWordsStartWithCapitalLetter_keepsDuplicates_ifTheyAppearMultipleTimes() {
         // Arrange
         String text = "Alice Alice Bob Bob";
-        String[] expected = {
-                "Alice",
-                "Alice",
-                "Bob",
-                "Bob"
-        };
+        String[] expected = {"Alice", "Alice", "Bob", "Bob"};
 
         // Act
         String[] actual = StringOps.checkAllWordsStartWithCapitalLetter(text);
